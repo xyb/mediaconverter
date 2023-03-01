@@ -184,6 +184,21 @@ dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
+name = "pyee"
+version = "9.0.4"
+description = "A port of node.js's EventEmitter to python."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyee-9.0.4-py2.py3-none-any.whl", hash = "sha256:9f066570130c554e9cc12de5a9d86f57c7ee47fece163bbdaa3e9c933cfbdfa5"},
+    {file = "pyee-9.0.4.tar.gz", hash = "sha256:2770c4928abc721f46b705e6a72b0c59480c4a69c9a83ca0b00bb994f1ea4b32"},
+]
+
+[package.dependencies]
+typing-extensions = "*"
+
+[[package]]
 name = "pytest"
 version = "7.2.1"
 description = "pytest: simple powerful testing with Python"
@@ -206,6 +221,22 @@ tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 
 [package.extras]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
+
+[[package]]
+name = "python-ffmpeg"
+version = "2.0.2"
+description = "A python binding for FFmpeg which provides sync and async APIs"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "python-ffmpeg-2.0.2.tar.gz", hash = "sha256:56929580b3a2f4b55cd6f1a6928e9e689d525e0198b5194185c144b58e2de06a"},
+    {file = "python_ffmpeg-2.0.2-py3-none-any.whl", hash = "sha256:c7528eba0d8dfcb511bab08946fc14a90bd0fa41c456b4621768392295d45ba2"},
+]
+
+[package.dependencies]
+pyee = "*"
+typing-extensions = "*"
 
 [[package]]
 name = "pytz"
@@ -244,6 +275,18 @@ files = [
 ]
 
 [[package]]
+name = "typing-extensions"
+version = "4.5.0"
+description = "Backported and Experimental Type Hints for Python 3.7+"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "typing_extensions-4.5.0-py3-none-any.whl", hash = "sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4"},
+    {file = "typing_extensions-4.5.0.tar.gz", hash = "sha256:5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb"},
+]
+
+[[package]]
 name = "tzdata"
 version = "2022.7"
 description = "Provider of IANA time zone data"
@@ -258,4 +301,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "dc8733d74db112789355c4d01b3c11a93a4aefc6599a131fdae63217270b7f19"
+content-hash = "d22ba3e7e175f37cce2898e16ae07c111cd04efe04b73645f83de07ed69e2ceb"

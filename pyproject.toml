@@ -11,6 +11,7 @@ python = "^3.8"
 djangorestframework = "^3.14.0"
 Django = "^4.1.7"
 django-filter = "^22.1"
+python-ffmpeg = "^2.0.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.1"
