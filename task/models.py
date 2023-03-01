@@ -17,3 +17,8 @@ class Task(models.Model):
     finished_at = models.DateTimeField(blank=True, null=True, editable=False)
     failed = models.BooleanField(default=False, editable=False)
     message = models.CharField(max_length=1000, editable=False)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['path']),
+        ]
