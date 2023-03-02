@@ -1,5 +1,6 @@
 from time import sleep
 
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 
@@ -18,10 +19,13 @@ class Command(BaseCommand):
                 task.started_at = timezone.now()
                 task.save()
 
+                from_path = settings.DATA_DIR / task.path
+                to_path =  settings.DATA_DIR / (task.path + '.mp3')
+
                 failed = False
                 message = ''
                 try:
-                    convert2mp3(task.path, task.path + '.mp3')
+                    convert2mp3(from_path, to_path)
                 except Exception as e:
                     failed = True
                     message = str(e)

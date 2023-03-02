@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'task',
 ]
 
+DATA_DIR = Path(getenv('DATA_DIR', '/tmp/')).resolve()
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
