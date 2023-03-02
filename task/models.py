@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Task(models.Model):
 
     class Status(models.TextChoices):
@@ -9,9 +8,9 @@ class Task(models.Model):
         STARTED = "Started"
         FINISHED = "Finished"
 
-    path = models.CharField(max_length=1024)
-    status = models.CharField(max_length=30, editable=False,
-                              choices=Status.choices, default=Status.INITED)
+    from_path = models.CharField(max_length=1024)
+    to_path = models.CharField(max_length=1024)
+    status = models.CharField(max_length=30, editable=False, choices=Status.choices, default=Status.INITED)
     created_at = models.DateTimeField(auto_now_add=True)
     started_at = models.DateTimeField(blank=True, null=True, editable=False)
     finished_at = models.DateTimeField(blank=True, null=True, editable=False)
@@ -20,5 +19,5 @@ class Task(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['path']),
+            models.Index(fields=['to_path']),
         ]

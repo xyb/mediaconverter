@@ -19,8 +19,8 @@ class Command(BaseCommand):
                 task.started_at = timezone.now()
                 task.save()
 
-                from_path = settings.DATA_DIR / task.path
-                to_path =  settings.DATA_DIR / (task.path + '.mp3')
+                from_path = settings.DATA_DIR / task.from_path
+                to_path =  settings.DATA_DIR / task.to_path
 
                 failed = False
                 message = ''
