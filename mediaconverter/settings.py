@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from os import getenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,13 +21,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@k&rxnu#$evcy3p3_&hqo#$qq9ib-dz%@z__qyt_k354k%l!vu'
+SECRET_KEY = getenv(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-@k&rxnu#$evcy3p3_&hqo#$qq9ib-dz%@z__qyt_k354k%l!vu',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(getenv('DJANGO_DEBUG', 1)))
 
-ALLOWED_HOSTS = []
+if getenv('DJANGO_ALLOWED_HOSTS'):
+    ALLOWED_HOSTS = getenv('DJANGO_ALLOWED_HOSTS').split(',')
+else:
+    ALLOWED_HOSTS = ['*']
 
+if getenv('CORS_ALLOWED_ORIGINS'):
+    CORS_ALLOWED_ORIGINS = getenv('CORS_ALLOWED_ORIGINS').split(',')
+elif getenv('CORS_ALLOW_ALL_ORIGINS'):
+    CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -78,10 +89,21 @@ WSGI_APPLICATION = 'mediaconverter.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': getenv('DB_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': getenv('DB_NAME', BASE_DIR / 'db.sqlite3'),
+        'USER': getenv('DB_USER', 'postgres'),
+        'PASSWORD': getenv('DB_PASSWORD', ''),
+        'HOST': getenv('DB_HOST', ''),
+        'PORT': getenv('DB_PORT', ''),
     }
 }
+if 'mysql' in DATABASES['default']['ENGINE']:
+    DATABASES['default']['OPTIONS'] = {
+        # fix mysql error 1452
+        "init_command": "SET foreign_key_checks = 0;",
+        # fix mysql emoji issue
+        'charset': 'utf8mb4',
+    }
 
 
 # Password validation
@@ -119,6 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
