@@ -1,6 +1,7 @@
 from ffmpeg import FFmpeg
 
-def convert2mp3(from_path, to_path, bitrate='320k'):
+
+def convert2mp3(from_path, to_path, bitrate="320k"):
     ffmpeg = (
         FFmpeg()
         .option("y")
