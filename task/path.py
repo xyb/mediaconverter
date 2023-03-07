@@ -1,17 +1,18 @@
-import posixpath
 import os
+import posixpath
 
 
 _os_alt_seps = list(
     sep for sep in [os.sep, os.path.altsep] if sep is not None and sep != "/"
 )
 
+
 class PathNotSafe(Exception):
     def __init__(self, path):
         self.path = path
 
     def __str__(self):
-        return f'PathNotSafe: {self.path!r}'
+        return f"PathNotSafe: {self.path!r}"
 
 
 # based on werkzeug.security.safe_join

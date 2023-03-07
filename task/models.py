@@ -5,7 +5,6 @@ from task.path import safe_join
 
 
 class Task(models.Model):
-
     class Status(models.TextChoices):
         INITED = "Inited"
         STARTED = "Started"
@@ -13,7 +12,12 @@ class Task(models.Model):
 
     from_path = models.CharField(max_length=1024)
     to_path = models.CharField(max_length=1024)
-    status = models.CharField(max_length=30, editable=False, choices=Status.choices, default=Status.INITED)
+    status = models.CharField(
+        max_length=30,
+        editable=False,
+        choices=Status.choices,
+        default=Status.INITED,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     started_at = models.DateTimeField(blank=True, null=True, editable=False)
     finished_at = models.DateTimeField(blank=True, null=True, editable=False)
@@ -22,7 +26,7 @@ class Task(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['to_path']),
+            models.Index(fields=["to_path"]),
         ]
 
     def get_full_from_path(self):
