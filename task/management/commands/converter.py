@@ -1,17 +1,21 @@
 from time import sleep
 #import traceback
 
-from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 
 from task.converter import convert2mp3
 from task.models import Task
-from task.path import safe_join
 
 
 class Command(BaseCommand):
     help = 'run convert process'
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--once',
+            action='store_true',
+            help='run converter for exists tasks and exit immediately.')
 
     def handle(self, *args, **options):
         while True:
@@ -25,9 +29,10 @@ class Command(BaseCommand):
                 failed = False
                 message = ''
                 try:
-                    from_path = safe_join(settings.DATA_DIR, task.from_path)
-                    to_path =  safe_join(settings.DATA_DIR, task.to_path)
-                    convert2mp3(from_path, to_path)
+                    convert2mp3(
+                        task.get_full_from_path(),
+                        task.get_full_to_path(),
+                    )
                     print(f'convert {task.to_path} successed.')
                 except Exception as e:
                     print(f'convert {task.to_path} failed.')
@@ -42,4 +47,6 @@ class Command(BaseCommand):
                 task.message = message
                 task.save()
 
+            if options['once']:
+                return
             sleep(5)

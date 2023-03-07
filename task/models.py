@@ -1,4 +1,7 @@
+from django.conf import settings
 from django.db import models
+
+from task.path import safe_join
 
 
 class Task(models.Model):
@@ -21,3 +24,9 @@ class Task(models.Model):
         indexes = [
             models.Index(fields=['to_path']),
         ]
+
+    def get_full_from_path(self):
+        return safe_join(settings.DATA_DIR, self.from_path)
+
+    def get_full_to_path(self):
+        return safe_join(settings.DATA_DIR, self.to_path)
